@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/compose-model-1649943868044.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1651062899157.xml" value="1.3790613718411553" />
+        <entry key="../../../../layout/compose-model-1653825124647.xml" value="0.309462915601023" />
+        <entry key="../../../../layout/compose-model-1653828170972.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1653854315911.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1653896759577.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1653937912216.xml" value="0.319693094629156" />
+        <entry key="../../../../layout/compose-model-1653997682027.xml" value="0.309462915601023" />
+        <entry key="../../../../layout/compose-model-1654006569351.xml" value="0.309462915601023" />
+        <entry key="../../../../layout/compose-model-1654007167122.xml" value="0.309462915601023" />
+        <entry key="app/src/main/res/xml/shortcuts.xml" value="0.14270833333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK" />
+</project>

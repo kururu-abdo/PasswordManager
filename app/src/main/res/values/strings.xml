@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Password_Manager</string>
+
+    <string name="prompt_info_title">Sample App Authentication</string>
+    <string name="prompt_info_subtitle">Please login to get access</string>
+    <string name="prompt_info_description">Sample App is using Android biometric authentication</string>
+    <string name="prompt_info_use_app_password">Use app password</string>
+    <string name="compose_shortcut_short_label1">new</string>
+    <string name="compose_shortcut_long_label1">Add New Password</string>
+    <string name="compose_disabled_message1">new</string>
+    <string name="fingerprint_title">verify via fingerprint</string>
+    <string name="fingerprint_subtitle">to use this feature we have to verify u</string>
+    <string name="pin">PIN</string>
+
+</resources>

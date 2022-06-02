@@ -54,7 +54,7 @@ if (viewModel.isFirstTime.value == true){
     // Image
     Box(contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize()) {
-        Image(painter = painterResource(id = R.drawable.logo2),
+        Image(painter = painterResource(id = R.drawable.saver),
             contentDescription = "Logo",
             modifier = Modifier.scale(scale.value))
     }

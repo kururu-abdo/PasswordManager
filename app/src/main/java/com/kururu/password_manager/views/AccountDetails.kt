@@ -38,7 +38,7 @@ fun  AccountDetails(
 
             ) {
                 
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = { navController.navigate("/")  }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         contentDescription = "Back",

@@ -98,10 +98,10 @@ Column(
                     verticalArrangement = Arrangement.Center
                 ){
 
-                    Image(painter = painterResource(id = com.kururu.password_manager.R.drawable.padlock),
+                    Image(painter = painterResource(id = com.kururu.password_manager.R.drawable.noresults),
 
                         contentDescription ="" )
-                    Text(text = "No Saved Passwords")
+                    Text(text = "No result found")
                 }
             }
         }

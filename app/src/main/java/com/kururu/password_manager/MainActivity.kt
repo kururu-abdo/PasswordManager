@@ -43,6 +43,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
+import com.kururu.password_manager.Events.AppEvents
+import com.kururu.password_manager.State.AppStates
 import com.kururu.password_manager.data.database.AppDatabase
 import com.kururu.password_manager.data.models.Account
 import com.kururu.password_manager.data.models.AccountType
@@ -72,7 +74,8 @@ class MainActivity : ComponentActivity() {
             val accountTypeDao = myDb.accountTypeDao()
          var   typesDao = AccountTypeRepository(accountTypeDao)
    var brands :MutableList<AccountType> = ArrayList()
-
+            var     viewModel: MainViewModel =
+                MainViewModel(LocalContext.current.applicationContext as Application)
             brands.add(
                 AccountType(1,"Facebook",
             R.drawable.facebook
@@ -102,8 +105,11 @@ class MainActivity : ComponentActivity() {
                 R.drawable.other
             ) )
 
-brands.forEach {
-    typesDao.insertAccountType(it)
+if (viewModel.isFirstTime.value==true){
+    brands.forEach {
+
+        typesDao.insertAccountType(it)
+    }
 }
 
 
@@ -118,6 +124,14 @@ brands.forEach {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                    // Greeting("Android")
 
+                var     viewModel: MainViewModel =
+                    MainViewModel(LocalContext.current.applicationContext as Application)
+//                    LaunchedEffect(viewModel.uiState.isPassed ) {
+//                        if(viewModel.uiState.isFirstTime == false) {
+//                            viewModel.navigateToPinScreen(navController , isLogin = true)
+//                        }
+//                    }
+
 
                     NavHost(navController = navController, startDestination = "/splash") {
                         composable("/" ,
@@ -125,7 +139,9 @@ brands.forEach {
                             deepLinks = listOf(navDeepLink { uriPattern = "$uri" })
 
                         ) {
-                           Home(navController , { laucnFingerPrint(
+                           Home(navController , {
+
+                               laucnFingerPrint(
                                navController, password="" ,email=""
                            ) })
 
@@ -144,13 +160,35 @@ composable("/splash" ){
                             deepLinks = listOf(navDeepLink { uriPattern = "$uri/new" })
 
                         ) { NewPassword(navController) }
+                        composable("/pin" ,
 
 
+                        ) {backStackEntry->
+
+
+                            LockScreen(
+                                navController
+                            ) }
+
+
+                        composable("/login?password={password}&email={email}" ,
+
+
+                            ) {backStackEntry->
+
+
+                            var password=  backStackEntry.arguments?.getString("password")
+                            var email =    backStackEntry.arguments?.getString("email")
+
+
+                            LockLoginScreen(navController,password=password!! , email = email!! ) }
                         composable("/details?password={password}&email={email}"){
                                 backStackEntry ->
 
                         var password=  backStackEntry.arguments?.getString("password")
                         var email =    backStackEntry.arguments?.getString("email")
+
+
                             AccountDetails(email = email!!, password = password!! , navController = navController)
                         }
 
@@ -402,6 +440,7 @@ fun  NewPassword(navController: NavController,
                          singleLine = true,
 
 
+
                          colors = TextFieldDefaults.textFieldColors(
                              backgroundColor =  textFieldColor,
                              cursorColor = Color.Black,
@@ -409,7 +448,9 @@ fun  NewPassword(navController: NavController,
                              focusedIndicatorColor = Color.Transparent,
                              unfocusedIndicatorColor = Color.Transparent
                          ),
-                       )
+                         maxLines = 1,
+
+                         )
 
 
                    }
@@ -434,6 +475,7 @@ fun  NewPassword(navController: NavController,
                        focusedIndicatorColor = Color.Transparent,
                        unfocusedIndicatorColor = Color.Transparent
                    ),
+                   maxLines = 1,
                    onValueChange = { textState.value = it } ,
 
                    visualTransformation = if (obsecured) VisualTransformation.None else PasswordVisualTransformation(),
@@ -482,6 +524,8 @@ fun  NewPassword(navController: NavController,
                                    focusedIndicatorColor = Color.Transparent,
                                    unfocusedIndicatorColor = Color.Transparent
                                ),
+                               maxLines = 1,
+
                                onValueChange = { commentTextState.value = it }
                             ,
                                label = { Text(text =commentLabel)}
@@ -529,7 +573,22 @@ when {
             textState.value.text
             )
 viewModel.inserAccount(account)
-  Toast.makeText(mContext ,"Account Added" ,Toast.LENGTH_LONG).show()
+
+        emailLabel="Email"
+        passwordLabel="Password"
+        commentLabel="Comment"
+
+        emailHasError=false
+        passwordHasError=false
+        commentHasError=false
+
+
+
+        emailTextState.value= TextFieldValue("")
+        textState.value=TextFieldValue("")
+        commentTextState.value=TextFieldValue("")
+        Toast.makeText(mContext ,"Account Added" ,Toast.LENGTH_LONG).show()
+
     }
 }
                        },

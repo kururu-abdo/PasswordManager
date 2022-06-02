@@ -33,6 +33,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.kururu.password_manager.Events.AppEvents
 import com.kururu.password_manager.R
 import com.kururu.password_manager.data.models.AccountData
 import com.kururu.password_manager.ui.theme.backGroundColor
@@ -45,8 +46,10 @@ fun  Home(navController: NavController, onTryShowDetails: () -> Unit ,
 
 
           viewModel: MainViewModel =
-              MainViewModel(LocalContext.current.applicationContext as Application)
-          ) {
+              MainViewModel(LocalContext.current.applicationContext as Application) ,
+          scaffoldState: ScaffoldState = rememberScaffoldState()
+
+) {
     val swipeRefreshState = rememberSwipeRefreshState(false)
     var searchTxt = remember {
         mutableStateOf("")
@@ -90,6 +93,7 @@ var mContext =LocalContext.current
             ) {
                 TextField(
                     value = searchTxt.value,
+                    label = { Text(text = "Email or Phone")},
                     onValueChange = { searchTxt.value = it },
 
 
@@ -98,6 +102,8 @@ var mContext =LocalContext.current
                         .padding(20.dp)
 
 //                       .background(color = Color(0xFFC4C4C4)) ,
+
+
 
                     , shape = RoundedCornerShape(8.dp),
 
@@ -117,7 +123,10 @@ var mContext =LocalContext.current
                         keyboardController?.hide()
                       viewModel.findAccount(searchTxt.value)
                         navController.navigate("/search?query=${searchTxt.value}")
-                    }) ,
+                    }
+
+
+                    ) ,
                     trailingIcon = {
 
 
@@ -276,8 +285,10 @@ Row(
      ) {
          DropdownMenuItem(onClick = {
              expanded = false
-             navController.navigate("/details?password=${accountData.password}&email=${accountData.email}")
+           //  navController.navigate("/details?password=${accountData.password}&email=${accountData.email}")
 
+
+             viewModel.onEvent(AppEvents.GoToDetailsScreen( email = accountData.email , passwrd = accountData.password),navController)
          }) {
              Text("Details")
          }

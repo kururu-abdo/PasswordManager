@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.os.CancellationSignal
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -171,7 +172,7 @@ composable("/splash" ){
                             ) }
 
 
-                        composable("/login?password={password}&email={email}" ,
+                        composable("/login?password={password}&email={email}&event={event}&accountId={accountId}" ,
 
 
                             ) {backStackEntry->
@@ -180,15 +181,21 @@ composable("/splash" ){
                             var password=  backStackEntry.arguments?.getString("password")
                             var email =    backStackEntry.arguments?.getString("email")
 
+                            var event =    backStackEntry.arguments?.getString("event")
+                            var accountId =    backStackEntry.arguments?.getString("accountId")!!.toInt()
 
-                            LockLoginScreen(navController,password=password!! , email = email!! ) }
+
+                            //accountId
+                            LockLoginScreen(navController,password=password!! , email = email!!  , event = event!! , accountId = accountId!!) }
                         composable("/details?password={password}&email={email}"){
                                 backStackEntry ->
 
                         var password=  backStackEntry.arguments?.getString("password")
                         var email =    backStackEntry.arguments?.getString("email")
 
-
+                            BackHandler(true) {
+                                // Or do nothing
+                            }
                             AccountDetails(email = email!!, password = password!! , navController = navController)
                         }
 

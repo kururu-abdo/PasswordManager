@@ -110,6 +110,8 @@ textError=true
 fun LockLoginScreen(
     navController: NavController,
     autheenticating:Boolean =false ,
+    event:String="show",
+    accountId:Int=0,
             viewModel: MainViewModel =
             MainViewModel(LocalContext.current.applicationContext as Application)
 
@@ -156,7 +158,15 @@ fun LockLoginScreen(
 
       }else{
           keyboardController?.hide()
-          viewModel.onEvent(AppEvents.Login(text.text , email  ,password) ,navController)
+
+
+       viewModel.onEvent(AppEvents.Login(
+           pwd=text.text,
+
+           passwrd = password , email =
+       email, accountId = accountId, event = event
+
+           ) , navController)
       }
                 }
             )

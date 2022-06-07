@@ -33,6 +33,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.kururu.password_manager.App
 import com.kururu.password_manager.Events.AppEvents
 import com.kururu.password_manager.R
 import com.kururu.password_manager.data.models.AccountData
@@ -288,7 +289,11 @@ Row(
            //  navController.navigate("/details?password=${accountData.password}&email=${accountData.email}")
 
 
-             viewModel.onEvent(AppEvents.GoToDetailsScreen( email = accountData.email , passwrd = accountData.password),navController)
+             viewModel.onEvent(AppEvents.GoToDetailsScreen( email = accountData.email , passwrd = accountData.password ,
+
+
+
+                 ),navController)
          }) {
              Text("Details")
          }
@@ -324,9 +329,9 @@ Row(
                         openDialog.value = false
 
                         //delete item from database
-viewModel.deleteProduct(accountData.id)
-                        Toast.makeText(mContext , "Deleted!" ,Toast.LENGTH_LONG).show()
-
+//viewModel.deleteProduct(accountData.id)
+//                        Toast.makeText(mContext , "Deleted!" ,Toast.LENGTH_LONG).show()
+viewModel.onEvent(AppEvents.Delete( accountId = accountData.id  ) ,navController);
 
                     }) {
                     Text("Confirm")

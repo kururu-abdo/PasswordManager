@@ -87,19 +87,35 @@ isFirstTime=MutableLiveData(sharedPreferences.getBoolean(Constants.IS_FISRST_TIM
      navController.navigate("/")
  }
 fun  doLogin(password:String):Boolean{
+    print(sharedPreferences.getString(Constants.PASSWORD_KEY ,""))
+    Log.v("SEARCH" ,    sharedPreferences.getString(Constants.PASSWORD_KEY ,"")!!)
     return  password ==sharedPreferences.getString(Constants.PASSWORD_KEY ,"")
 }
     fun onEvent(event:AppEvents ,navController: NavController){
         when(event) {
             is AppEvents.GoToDetailsScreen -> {
        var data =(event as AppEvents.GoToDetailsScreen)
-                navController.navigate("/login?password=${data.passwrd}&email=${data.email}")
+                navController.navigate("/login?password=${data.passwrd}&email=${data.email}&event=show&accountId=0")
             }
             is AppEvents.Login ->{
             var data =(event as AppEvents.Login)
             if (doLogin(data.pwd)){
+                when(data.event){
+                    "show" ->  {
+                        navController.navigate("/details?password=${data.passwrd}&email=${data.email}&event=show")
 
-                navController.navigate("/details?password=${data.passwrd}&email=${data.email}")
+                    }
+                    "delete" ->{
+                        // viewModel.onEvent(AppEvents.Delete(text.text , email  ,password , accountId = accountId) ,navController)
+                        deleteProduct(data.accountId)
+                        Log.v("ACCOUNT" ,data.accountId.toString())
+                        Toast.makeText(App.instance , "Deleted!" ,Toast.LENGTH_LONG).show()
+
+                        navController.popBackStack()
+                    }
+                    else ->{
+                    }
+                }
 
             }else {
                 Toast.makeText(App.instance ,
@@ -111,6 +127,22 @@ fun  doLogin(password:String):Boolean{
 //                navigateToPinScreen(navController )
 
             }
+
+            is AppEvents.Delete -> {
+                var data =(event as AppEvents.Delete)
+                Log.v("SEARCH" ,data.accountId.toString())
+                navController.navigate("/login?password=${data.passwrd}&email=${data.email}&event=delete&accountId=${data.accountId}")
+
+
+
+
+
+            }
+
+
+
+
+
             is AppEvents.FirstTimeEvent ->{
 
                 navController.navigate("/pin")
